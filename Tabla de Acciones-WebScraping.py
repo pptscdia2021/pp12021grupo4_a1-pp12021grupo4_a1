@@ -49,4 +49,14 @@ with open('bolsa_ibex35.csv', 'a', newline="") as csv_file: # Abro/Creo archivo 
         if(row['name'] != ""): # Como el primer registro es null y no quiero que se escriba en el CSV con IF salteo ese registro
             writer.writerow([row['name'], row['price'], datetime.now()])
 
+# importar libreria de panda para trabajar con datos tabulados
+import pandas as pd
+import codecs # Esta libreria la utilizo para acomodar el decodificado de caracteres.
 
+# Esta linea decodifica el archivo CSV para que quede en UTF-8
+with codecs.open(r"C:\repo_Git\bolsa_ibex35.csv", 'r', encoding='utf-8',
+                 errors='ignore') as fdata:
+# instancio pandas  (con pd) y llamo a la funcion read_csv el cual lee el archivo CSV y lo convierte en tabla
+    df = pd.read_csv(fdata)
+
+print (df)
