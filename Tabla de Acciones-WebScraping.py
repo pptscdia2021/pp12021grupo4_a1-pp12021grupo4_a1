@@ -1,3 +1,4 @@
+
 # import libraries
 import requests
 from bs4 import BeautifulSoup
@@ -49,11 +50,11 @@ with open('bolsa_ibex35.csv', 'a', newline="") as csv_file: # Abro/Creo archivo 
             writer.writerow([row['name'], row['price'], datetime.now()])
 
 # importar libreria de panda para trabajar con datos tabulados
-import pandas as pd
-import codecs # Esta libreria la utilizo para acomodar el decodificado de caracteres.
+#import pandas as pd
+#import codecs # Esta libreria la utilizo para acomodar el decodificado de caracteres.
 
 # Esta linea decodifica el archivo CSV para que quede en UTF-8
-with codecs.open(r"C:\repo_Git\bolsa_ibex35.csv", 'r', encoding='utf-8',
+with codecs.open("bolsa_ibex35.csv", 'r', encoding='utf-8',
                  errors='ignore') as fdata:
 # instancio pandas  (con pd) y llamo a la funcion read_csv el cual lee el archivo CSV y lo convierte en tabla
     df = pd.read_csv(fdata)
