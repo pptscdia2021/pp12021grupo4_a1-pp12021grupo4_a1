@@ -83,6 +83,22 @@ def df_monedas(array_monedas):
 array_monedas =["BBVA","SAN","TEF","MT"]
 d = df_monedas(array_monedas)
 d
+
+# VALORES MAXIMOS Y MINIMOS
+#Valor Maximo
+max_valor = d.Close.max()
+print(max_valor)
+#Valor Minimo
+min_valor = d.Close.min()
+print(min_valor)
+# Los 2 maximos
+# Ordeno de Menor a Mayor por la columna Close
+m_mayores = d.sort_values('Close').tail(2)
+m_menores = d.sort_values('Close').head(2)
+print(m_mayores)
+print(m_menores)
+
+
     
       
 
