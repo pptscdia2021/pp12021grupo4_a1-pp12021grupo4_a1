@@ -9,12 +9,14 @@ import pandas as pd
 import codecs # Esta libreria la utilizo para acomodar el decodificado de caracteres
 
 
+#url_page = 'http://www.bolsamadrid.es/esp/aspx/Indices/Resumen.aspx'
+
 url_page = 'http://www.bolsamadrid.es/esp/aspx/Indices/Resumen.aspx'
 page = requests.get(url_page).text 
 soup = BeautifulSoup(page, "lxml")
 
 # Obtenemos la tabla por un ID específico
-tabla = soup.find('table', attrs={'id': 'ctl00_Contenido_tblÍndices'})
+tabla = soup.find('table', attrs={'id': 'ctl00_Contenido_tblAcciones'})
 
 #Extrayendo datos de la tabla
 name=""
@@ -22,7 +24,7 @@ price=""
 nroFila=0 # Flag se utiliza lara tener visibilidad de las iteraciones
 # DEFINO ARRAY DONDE GUARDAR LOS DATOS DE CADA ITERACION
 array=[]
-
+print(tabla)
 for fila in tabla.find_all('tr'):
     # for row in  tabla.find_all("td")::
     nroCelda=0
@@ -60,3 +62,18 @@ with codecs.open("bolsa_ibex35.csv", 'r', encoding='utf-8',
     df = pd.read_csv(fdata)
 
 print (df)
+df.head()
+
+# VALORES MAXIMOS Y MINIMOS
+#Valor Maximo
+max_valor = df.Close.max()
+print(max_valor)
+#Valor Minimo
+min_valor = df.Close.min()
+print(min_valor)
+# Los 2 maximos
+# Ordeno de Menor a Mayor por la columna Close
+m_mayores = df.sort_values('Close').tail(2)
+m_menores = df.sort_values('Close').head(2)
+print(m_mayores)
+print(m_menores)
