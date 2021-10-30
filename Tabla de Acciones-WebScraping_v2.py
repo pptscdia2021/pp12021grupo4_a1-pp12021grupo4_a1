@@ -22,7 +22,7 @@ tabla = soup.find('table', attrs={'id': 'ctl00_Contenido_tblAcciones'})
 tabla
 
 nombre=""
-util=0
+ultimo=0
 dif=0
 maximo = 0
 minimo =0
@@ -38,37 +38,38 @@ for fila in tabla.find_all('tr'):
     for celda in fila.find_all('td'):
         if nroCelda==0:
             nombre=celda.text
-            print("nombre:", nombre)
+           # print("nombre:", nombre)
         if nroCelda==1:
-            util=celda.text
-            print("util:", util)    
+            ultimo=celda.text
+           # print("ultimo:", ultimo)    
         if nroCelda==2:
             dif=celda.text
-            print("dif:", dif)
+           # print("dif:", dif)
         if nroCelda==3:
             maximo=celda.text
-            print("maximo:", maximo)
+           # print("maximo:", maximo)
         if nroCelda==4:
             minimo=celda.text
-            print("minimo:", minimo)
+           # print("minimo:", minimo)
         if nroCelda==7:
             fecha=celda.text
-            print("fecha:", fecha)
+          #  print("fecha:", fecha)
         nroCelda=nroCelda+1 # FLAG que incrementa la celda
     nroFila=nroFila+1 # Flag que incrementa la fila 
     # AGREGO/GUARDO LOS DATOS EN FORMATO DICCIONARIO EN EL ARRAY.
-    array.append({"nombre": nombre, "util": util, "dif":dif, "maximo":maximo, "minimo":minimo, "fecha":fecha})
+    array.append({"nombre": nombre, "ultimo": ultimo, "dif":dif, "maximo":maximo, "minimo":minimo, "fecha":fecha})
 
 # Abrimos el csv con open para que pueda agregar contenidos al final del archivo
 # agrego el parametro newline="" para que no haga un salto de linea 
 with open('bolsa_de_madrid.csv', 'a', newline="") as csv_file: # Abro/Creo archivo CSV al que llamare csv_file dentro de python
     writer = csv.writer(csv_file) # Determino que voy a escribir el archivo
-    writer.writerow(["nombre", "util" , "dif", "maximo", "minimo","fecha"])
+    writer.writerow(["nombre", "ultimo" , "dif", "maximo", "minimo","fecha"])
     for row in array : # Recorro el diccionario linea por linea.
         #print(row['name'])
         
         #if(row['name'] != ""): # Como el primer registro es null y no quiero que se escriba en el CSV con IF salteo ese registro
-            writer.writerow([row["nombre"], row["util"], row["dif"], row["maximo"], row["minimo"], row["fecha"]])
+            writer.writerow([row["nombre"], row["ultimo"], row["dif"], row["maximo"], row["minimo"], row["fecha"]])
+
 
 # importar libreria de panda para trabajar con datos tabulados
 import pandas as pd
@@ -78,30 +79,30 @@ import codecs # Esta libreria la utilizo para acomodar el decodificado de caract
 with codecs.open(r"C:\xampp\htdocs\pp12021grupo4_a1-pp12021grupo4_a1\bolsa_de_madrid.csv", 'r', encoding='utf-8', errors='ignore') as fdata:
 # instancio pandas  (con pd) y llamo a la funcion read_csv el cual lee el archivo CSV y lo convierte en tabla
     df = pd.read_csv(fdata)
-    
-print(" ################################ \n FINALIZO \n ######################## \n")
+    df
+print(" ################################ \n FINALIZO CSV \n ######################## \n")
 
 # Convertir el valor de STRING a FLOAT
-df['util'] = df['util'].apply(lambda x: x.replace(',','.'))
+df['ultimo'] = df['ultimo'].apply(lambda x: x.replace(',','.'))
 # Convierte los datos a tipo float
-df['util'] = df['util'].astype(float)
+df['ultimo'] = df['ultimo'].astype(float)
 
-print(df.sort_values(by=['util']))
+print(df.sort_values(by=['ultimo']))
 
 
 # VALORES MAXIMOS Y MINIMOS
 #Valor Maximo
-max_valor = df.util.max()
+max_valor = df.ultimo.max()
 print(max_valor)
 #Valor Minimo
-min_valor = df.util.min()
+min_valor = df.ultimo.min()
 print(min_valor)
 # Los 2 maximos
 # Ordeno de Menor a Mayor por la columna Close
-m_mayores = df.sort_values('util').tail(2)
-m_menores = df.sort_values('util').head(2)
+m_mayores = df.sort_values('ultimo').tail(2)
+m_menores = df.sort_values('ultimo').head(2)
 print(m_mayores)
 print(m_menores)
 
-#df['util'] = df['util'].astype(float)
+#df['ultimo'] = df['ultimo'].astype(float)
 

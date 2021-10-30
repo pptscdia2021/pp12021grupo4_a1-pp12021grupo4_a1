@@ -1,7 +1,8 @@
-#pip install yfinance
-import yfinance as yf
+
 '''
 # CODIGO QUE DEVUELVE UN DF POR CADA MONEDA
+#pip install yfinance
+import yfinance as yf
 
 if __name__ == '__main__':
         # Mostrar datos en tabla 
@@ -57,6 +58,7 @@ df_final.tail()
 # 1 normalizar los datos (la informacion no esta almacenada en ningun csv, y deben estar en un unico archivo)
 # El script busca las monedas y las carga todas juntas en un unico DF para su analisis
 import pandas as pd
+import yfinance as yf
 # ARRAY DE MONEDAS A BUSCAR
 
 
@@ -84,6 +86,10 @@ array_monedas =["BBVA","SAN","TEF","MT"]
 d = df_monedas(array_monedas)
 d
 
+#Creo el CSV desde un panda data frame
+csvstring = d.to_csv('Tabla Yfinance.csv')
+print(csvstring)
+
 # VALORES MAXIMOS Y MINIMOS
 #Valor Maximo
 max_valor = d.Close.max()
@@ -97,6 +103,8 @@ m_mayores = d.sort_values('Close').tail(2)
 m_menores = d.sort_values('Close').head(2)
 print(m_mayores)
 print(m_menores)
+
+
 
 
     
