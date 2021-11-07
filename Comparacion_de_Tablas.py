@@ -47,7 +47,7 @@ df_empresas_bm
 # Unir 2 data frames
 # Link ref: https://www.analyticslane.com/2018/09/10/unir-y-combinar-dataframes-con-pandas-en-python/
 df_conjunto = pd.merge(df_empresas_bm, dfyf, left_on='short_name', right_on='Moneda', suffixes=('B_MADRID', 'YFINANCE'))
-
+df_conjunto
 # Creo un nuevo data frame para comparar precios 
 df_final = df_conjunto[["nombre","short_name", "ultimo","Close","fecha"]]
 
@@ -72,6 +72,7 @@ for valor in df_final.index :
         resultados.append('MADRID')
     else:
         resultados.append('YFINANCE')
+    
 
 # Inserto la columna con los datos correspondiente a cada fila        
 df_final.insert(4, "MAYOR", resultados, allow_duplicates=False)
