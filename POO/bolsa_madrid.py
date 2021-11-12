@@ -76,7 +76,6 @@ class Bolsa_madrid:
         with codecs.open(r""+self.ruta_descarga+"bolsa_de_madrid.csv", 'r', encoding='utf-8', errors='ignore') as fdata:
         # instancio pandas  (con pd) y llamo a la funcion read_csv el cual lee el archivo CSV y lo convierte en tabla
             df = pd.read_csv(fdata)
-            df
         # Convertir el valor de STRING a FLOAT
         df['ultimo'] = df['ultimo'].apply(lambda x: x.replace(',','.'))
         # Convierte los datos a tipo float

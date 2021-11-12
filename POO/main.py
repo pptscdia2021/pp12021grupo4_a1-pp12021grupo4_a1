@@ -6,6 +6,7 @@ Created on Fri Nov 12 17:00:41 2021
 """
 
 from bolsa_madrid import * 
+from yyfinance import *
 
 import pandas as pd
 
@@ -17,13 +18,22 @@ if __name__ == "__main__":
   bm = Bolsa_madrid(url,ruta_descarga)
   result = bm.buscar_datos() # devuelve un aarray
   print(result)
-  bm.crear_csv(result) # Crea el CSV
+  #bm.crear_csv(result) # Crea el CSV
   df = bm.lee_csv() # lee el csv. Crea y Devuelve un DF
   print(df)
   print(bm.max_valor())
   print(bm.min_valor())
   print(bm.to_max_valor())
   print(bm.to_min_valor())
+  
+  array=["BBVA","SAN","TEF","MT"]
+  
+  yaf = Yfinance(array,ruta_descarga) # instancio la clase
+  df = yaf.df_monedas() # busca los tikets del array y arma un DF
+  print(df)
+  yaf.guardar_csv() # crea y guarda en un CSV
+  
+  
   
   
   
