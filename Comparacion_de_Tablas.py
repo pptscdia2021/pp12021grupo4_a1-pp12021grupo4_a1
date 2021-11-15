@@ -28,9 +28,8 @@ with codecs.open(r"Tabla Yfinance.csv", 'r', encoding='utf-8', errors='ignore') 
     dfyf = pd.read_csv(fdata)
     dfyf
 
-# FILTRO EL DF y creo un nuevo DF con los registro que quiero comparar
+# FILTRO EL DF de BOLSA DE MADRID y creo un nuevo DF con los registro que quiero comparar con YF
 df_empresas_bm = dfbm[dfbm.nombre.isin(["B.SANTANDER","BBVA","TELEFONICA","ARCELORMIT."])]
-
 df_empresas_bm
 
 # Creo un array con los valores de la nueva columna para relacionar con el otro dataframe
@@ -38,6 +37,10 @@ df_empresas_bm
 # link ref: https://www.delftstack.com/es/howto/python-pandas/how-to-add-a-new-column-to-existing-dataframe-with-default-value-in-pandas/
 # EL ORDEN DEBE SER CALIBRADO CON EL DATA FRAME
 print(dfyf)
+print(df_empresas_bm)
+
+
+#Creo un nombre corto a las accciones de la BM. (El orden en el que aparece el nombre corto debe ser el mismo que el de su nombre largo)
 short_name=["MT", "SAN","BBVA","TEF"]
 # Agrego columna al DF con sus datos (short_name)
              # insert(posicion, "nombre_columna", valores,duplicados)
@@ -48,6 +51,7 @@ df_empresas_bm
 # Link ref: https://www.analyticslane.com/2018/09/10/unir-y-combinar-dataframes-con-pandas-en-python/
 df_conjunto = pd.merge(df_empresas_bm, dfyf, left_on='short_name', right_on='Moneda', suffixes=('B_MADRID', 'YFINANCE'))
 df_conjunto
+
 # Creo un nuevo data frame para comparar precios 
 df_final = df_conjunto[["nombre","short_name", "ultimo","Close","fecha"]]
 
@@ -59,7 +63,7 @@ df_final['ultimo'] = df_final['ultimo'].apply(lambda x: x.replace(',','.'))
 df_final['ultimo'] = df_final['ultimo'].astype(float)
 
 
-# Recorro el DF y defino nueva columna
+# Recorro el DF y defino nueva columna (la columna MAYOR, que me va a mostrar cual de las dos bolsas tiene un valor de accion mayor)
 # link ref: https://www.delftstack.com/es/howto/python-pandas/how-to-iterate-through-rows-of-a-dataframe-in-pandas/
 
 resultados =[] #creo el array que almacena el resultado para cada fila
@@ -73,7 +77,6 @@ for valor in df_final.index :
     else:
         resultados.append('YFINANCE')
     
-
 # Inserto la columna con los datos correspondiente a cada fila        
 df_final.insert(4, "MAYOR", resultados, allow_duplicates=False)
 

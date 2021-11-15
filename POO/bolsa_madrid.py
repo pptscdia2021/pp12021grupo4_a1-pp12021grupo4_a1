@@ -2,7 +2,6 @@
 import requests
 from bs4 import BeautifulSoup
 import csv
-from datetime import datetime
 import pandas as pd
 import codecs # Esta libreria la utilizo para acomodar el decodificado de caracteres.
 
@@ -11,7 +10,6 @@ class Bolsa_madrid:
         self.url = url
         self.ruta_descarga = ruta_descarga
         self.df = {}
-
     
     def buscar_datos(self):
         # tarda 480 milisegundos
@@ -65,9 +63,8 @@ class Bolsa_madrid:
             writer = csv.writer(csv_file) # Determino que voy a escribir el archivo
             writer.writerow(["nombre", "ultimo" , "dif", "maximo", "minimo","fecha"])
             for row in array : # Recorro el diccionario linea por linea.
-                #print(row['name'])
-                
-                #if(row['name'] != ""): # Como el primer registro es null y no quiero que se escriba en el CSV con IF salteo ese registro
+                              
+                #if(row['nombre'] != ""): # Como el primer registro es null y no quiero que se escriba en el CSV con IF salteo ese registro
                     writer.writerow([row["nombre"], row["ultimo"], row["dif"], row["maximo"], row["minimo"], row["fecha"]])
         return True
     
@@ -83,6 +80,7 @@ class Bolsa_madrid:
         self.df = df.sort_values(by=['ultimo'])
 
         return self.df
+    
     def max_valor(self):
         return self.df.ultimo.max()
     def min_valor(self):
