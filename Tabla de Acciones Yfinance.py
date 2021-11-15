@@ -63,33 +63,36 @@ import yfinance as yf
 
 
 def df_monedas(array_monedas):
-    array_monedas = array_monedas #["BBVA","SAN","TEF","MT"]
-#COLUMNAS DEL DATA FRAME FINAL
+    array_monedas = array_monedas # tiene las monedas que yo quiero buscar["BBVA","SAN","TEF","MT"]
+#Creo los headers del data frame final (COLUMNAS DEL DATA FRAME FINAL)
+#Aca voy a ir guardando lo que me devuelve la consulta y que va a ser mi tabla final.
     df_final= pd.DataFrame(columns = ['Data','Moneda','Open','Low','High','Volumne'])
     
     # RECORRO ARRAY DE MONEDAS Y CREO EL ARRAY FINAL
     for moneda in array_monedas :
-        # Instancio un Ticker (info, moneda) y el historico de precio en dias
+        # Instancio un Ticker le paso la moneda que quiero buscar y el periodo.
+        #Busca los datos de la moneda que le pido. 
         df = yf.Ticker(moneda).history(period="1d")
         # Elimino las columnas del dataframe que envia yfinance
         df.drop(["Dividends","Stock Splits"], axis=1, inplace=True)
         # Agrego la columna MONEDA para identificar el registro
         df["Moneda"]=moneda
-        # Agrego df al df final
+        # Agreg
         df_final=df_final.append(df)
         
     return df_final
 
 
-
 array_monedas =["BBVA","SAN","TEF","MT"]
 d = df_monedas(array_monedas)
-d
+print(d,"\n")
 
 #Creo el CSV desde un panda data frame
 csvstring = d.to_csv('Tabla Yfinance.csv')
 print(csvstring)
 
+
+print("OBJETIVO 2 : Cotizacion de Mayor ganancia y Mayor perdida")
 # VALORES MAXIMOS Y MINIMOS
 #Valor Maximo
 max_valor = d.Close.max()
