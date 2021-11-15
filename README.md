@@ -1,2 +1,3 @@
-# pp12021grupo4_a1-pp12021grupo4_a1
-pp12021grupo4_a1-pp12021grupo4_a1 created by GitHub Classroom
+AULA 1 - GRUPO 4
+
+Repositorio que desarrolla y trabaja Programacion estructurada, orientada a objeto (POO),y base de datos.
